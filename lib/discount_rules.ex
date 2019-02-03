@@ -17,12 +17,12 @@ defmodule DiscountRules do
     iex> DiscountRules.apply_discount(2, price, rule_2_x_1)
     #Decimal<5.0>
     iex> off_10 = Decimal.from_float(4.5 / 5)
-    iex> rule_GT_3_33_percent = %DiscountRules{
+    iex> rule_GT_3_10_percent = %DiscountRules{
     ...>discount_type: :drop_if_GT,
     ...>condition: 3,
     ...>value: off_10,
     ...>}
-    iex> DiscountRules.apply_discount(5, price, rule_GT_3_33_percent)
+    iex> DiscountRules.apply_discount(5, price, rule_GT_3_10_percent)
     #Decimal<22.50>
   """
   def apply_discount(count, price, %{discount_type: :x_get_y,
@@ -32,7 +32,7 @@ defmodule DiscountRules do
     count # Example: Buy 3(X), Get 2(Y) |  count = 5
     |> div(condition) # Divide count by X Value: div(5 , 3) = 1
     |> (&((&1 * value))).() # Multiple by Y value: 1 * 2 = 2
-    |> (&(&1 + rem(count, condition))).() # Finally add the Remainder: 2 + rem(5 , 2) = 4
+    |> (&(&1 + rem(count, condition))).() # Finally add the Remainder: 2 + rem(5 , 3) = 4
     |> D.mult(price)
   end
 

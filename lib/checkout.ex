@@ -73,11 +73,12 @@ defmodule Checkout do
   def new(p_r) when is_list(p_r), do: new(@products_list, p_r)
   def new(_), do: :error
 
-  defp new(prod_discount, []), do: Cashier.new(prod_discount)
-  defp new(prod_discount, [{prod, %DiscountRules{} = rule}|tail]) do
-    prod_discount
+  defp new(p_list, []), do: Cashier.new(p_list)
+
+  defp new(p_list, [{prod, %DiscountRules{} = rule} | t]) when is_atom(prod) do
+    p_list
     |> Keyword.update!(prod, &(%{&1 | rule: rule}))
-    |> new(tail)
+    |> new(t)
   end
   defp new(_, _), do: :error
 end
