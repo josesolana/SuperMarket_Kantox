@@ -42,8 +42,6 @@ defmodule Checkout do
     co.scan(item)
     price = co.total
 
-    #Decimal<22.45>
-
     ## Examples
     iex> Checkout.new(%{})
     :error
